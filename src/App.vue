@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Dragger></Dragger>
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
@@ -20,8 +21,11 @@
 </template>
 
 <script>
+import Dragger from './components/Dragger.vue';
+
 export default {
   name: 'app',
+  components: { Dragger },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
