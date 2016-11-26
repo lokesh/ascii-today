@@ -33,7 +33,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'jquery': 'node_modules/jquery/src/jquery',
+      'jquery': 'jquery/dist/jquery',
       'vue$': 'vue/dist/vue.common.js',
     }
   },
