@@ -1,0 +1,19 @@
+{
+  "name": "ascii-today",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lokesh/ascii-today.git"
+  },
+  "author": "Lokesh Dhakar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lokesh/ascii-today/issues"
+  },
+  "homepage": "https://github.com/lokesh/ascii-today#readme"
+}
