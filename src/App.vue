@@ -1,42 +1,39 @@
 <template>
   <div class="app">
-    <textarea id="text" type="text" @input="onTextChange"></textarea>
+    <textarea v-model="text" autofocus></textarea>
     <template v-for="font in fonts">
-      <preview :font-name="font.name" :text="text"></preview>
+      <preview-debug :font-name="font.name" :font-height="font.height"  :text="text"></preview-debug>
     </template>
   </div>
 </template>
 
 <script>
 import figlet from 'figlet';
-import Preview from './components/Preview.vue';
+import PreviewDebug from './components/PreviewDebug.vue';
 
 export default {
   name: 'app',
-  components: { Preview },
+  components: { PreviewDebug },
   created: onCreate,
 
   data: function() {
     return {
-      text: 'Hello There!',
+      text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       fonts: [
-        { name: 'Standard' },
-        { name: 'Ghost' },
+        { name: '3D Diagonal', height: 20 },
+        { name: 'Acrobatic', height: 12 },
+        { name: 'Basic', height: 7 },
+        { name: 'Standard', height: 7 },
+        { name: 'Ghost', height: 10 },
       ]
-    }
-  },
-
-  methods: {
-    onTextChange: function(event) {
-      this.text = event.target.value;
     }
   }
 }
 
 function onCreate() {
   // Set font path and preload fonts
-  figlet.defaults({fontPath: "src/assets/fonts"});
-  figlet.preloadFonts(["Standard", "Ghost"], ready);
+  figlet.defaults({fontPath: 'src/assets/fonts'});
+  figlet.preloadFonts(['Standard', 'Ghost'], ready);
 }
 
 function ready() {

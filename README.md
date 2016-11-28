@@ -1,6 +1,6 @@
 # ascii-today
 
-> Ascii today, Unicode tomorrow.
+> Ascii today, gone tomorrow.
 
 ## Build Setup
 

@@ -19,7 +19,7 @@ export default {
   },
 
   mounted: function() {
-    // this.generateText();
+    this.generateText();
   },
 
   methods: {
@@ -58,7 +58,7 @@ h1 {
 }
 
 .preview__text {
-  width: 100%;
+  width: 10000px;
   height: 10em;
   padding: 0;
   // overflow-y: hidden;
