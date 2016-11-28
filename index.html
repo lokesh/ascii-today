@@ -7,9 +7,49 @@
 
     <!-- Hack: Prevent favicon request errors -->
     <link rel="icon" href="data:,">
+
+    <style lang="sass">
+      body,
+      input,
+      textarea,
+      button {
+        font-size: 14px;
+        font-family: menlo, monospace;
+      }
+
+      body {
+        margin: 0;
+        padding: 32px;
+      }
+    </style>
+
   </head>
   <body>
+
     <div id="app"></div>
+
     <script src="/dist/build.js"></script>
+<script>
+
+// figlet.defaults({fontPath: "node_modules/figlet/fonts"});
+
+// figlet.preloadFonts(["Standard", "Ghost"]);
+
+// function ready(){
+//   console.log(figlet.textSync("ASCII"));
+//   console.log(figlet.textSync("Art", "Ghost"));
+// }
+
+    // figlet('Hello!', 'Standard', function(err, text) {
+    //     if (err) {
+    //         console.log('something went wrong...');
+    //         console.dir(err);
+    //         return;
+    //     }
+    //     console.log(text);
+    // });
+
+</script>
+
   </body>
 </html>

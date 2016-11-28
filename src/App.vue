@@ -1,64 +1,49 @@
 <template>
-  <div id="app">
-    <Dragger></Dragger>
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div class="app">
+    <textarea id="text" type="text" @input="onTextChange"></textarea>
+    <template v-for="font in fonts">
+      <preview :font-name="font.name" :text="text"></preview>
+    </template>
   </div>
 </template>
 
 <script>
-import Dragger from './components/Dragger.vue';
+import figlet from 'figlet';
+import Preview from './components/Preview.vue';
 
 export default {
   name: 'app',
-  components: { Dragger },
-  data () {
+  components: { Preview },
+  created: onCreate,
+
+  data: function() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      text: 'Hello There!',
+      fonts: [
+        { name: 'Standard' },
+        { name: 'Ghost' },
+      ]
+    }
+  },
+
+  methods: {
+    onTextChange: function(event) {
+      this.text = event.target.value;
     }
   }
 }
+
+function onCreate() {
+  // Set font path and preload fonts
+  figlet.defaults({fontPath: "src/assets/fonts"});
+  figlet.preloadFonts(["Standard", "Ghost"], ready);
+}
+
+function ready() {
+  console.log('preloaded!');
+}
+
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+<style lang="sass" scoped>
 </style>
