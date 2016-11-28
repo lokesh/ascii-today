@@ -1,7 +1,7 @@
 <template>
   <div class="preview">
-    <h2 class="preview__name">{{ fontName }}</h2>
-    <textarea class="preview__text" readonly="readonly" @click="selectText"></textarea>
+    <!-- <h2 class="preview__name">{{ fontName }}</h2> -->
+    <pre class="preview__text" @click="selectText"></pre>
   </div>
 </template>
 
@@ -24,8 +24,18 @@ export default {
 
   methods: {
     selectText: function(event) {
-     event.target.focus();
-     event.target.select();
+      // Text selection code taken from http://stackoverflow.com/a/987376/400407
+      if (document.body.createTextRange) {
+          let range = document.body.createTextRange();
+          range.moveToElementText(event.target);
+          range.select();
+      } else if (window.getSelection) {
+          let selection = window.getSelection();
+          let range = document.createRange();
+          range.selectNodeContents(event.target);
+          selection.removeAllRanges();
+          selection.addRange(range);
+      }
     },
 
     generateText: function() {
@@ -40,30 +50,29 @@ export default {
 }
 
 
-
 </script>
 
 <style lang="sass" scoped>
-h1 {
-  display: none;
-}
-
 .preview {
   margin-bottom: 32px;
 }
 
 .preview__name {
+  margin: 0;
   font-size: 14px;
   text-transform: uppercase;
 }
 
 .preview__text {
-  width: 10000px;
-  height: 10em;
-  padding: 0;
-  // overflow-y: hidden;
-  // resize: none;
+  margin: 0;
+  // max-width: 100%;
+  // overflow: hidden;
+  cursor: pointer;
   font-size: 12px;
+
+  // &::selection {
+  //   background-color: #a7541a;
+  // }
 }
 
 

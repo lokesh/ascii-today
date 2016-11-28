@@ -1,30 +1,29 @@
 <template>
   <div class="app">
-    <textarea v-model="text" autofocus></textarea>
+    <textarea class="text-input" v-model="text" spellcheck="false" autofocus></textarea>
     <template v-for="font in fonts">
-      <preview-debug :font-name="font.name" :font-height="font.height"  :text="text"></preview-debug>
+      <preview :font-name="font.name" :text="text"></preview>
     </template>
   </div>
 </template>
 
 <script>
 import figlet from 'figlet';
-import PreviewDebug from './components/PreviewDebug.vue';
+import Preview from './components/Preview.vue';
 
 export default {
   name: 'app',
-  components: { PreviewDebug },
+  components: { Preview },
   created: onCreate,
 
   data: function() {
     return {
       text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       fonts: [
-        { name: '3D Diagonal', height: 20 },
-        { name: 'Acrobatic', height: 12 },
-        { name: 'Basic', height: 7 },
-        { name: 'Standard', height: 7 },
-        { name: 'Ghost', height: 10 },
+        { name: '3D Diagonal' },
+        { name: 'Basic' },
+        { name: 'Standard' },
+        { name: 'Ghost' },
       ]
     }
   }
@@ -43,4 +42,7 @@ function ready() {
 </script>
 
 <style lang="sass" scoped>
+.text-input {
+  width: 100%;
+}
 </style>
