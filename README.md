@@ -2,7 +2,7 @@
 
 > Ascii today, gone tomorrow.
 
-## Build Setup
+## Build basics
 
 ``` bash
 # install dependencies
@@ -15,4 +15,5 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## How the app works
+

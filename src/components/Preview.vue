@@ -1,7 +1,8 @@
 <template>
   <div class="preview">
-    <!-- <h2 class="preview__name">{{ fontName }}</h2> -->
-    <pre class="preview__text" @click="selectText"></pre>
+    <h2 class="preview__name">{{ fontName }} by {{ fontAuthor }}</h2>
+    <pre ref="text" class="preview__text" @click="selectText"></pre>
+
   </div>
 </template>
 
@@ -10,7 +11,7 @@ import figlet from 'figlet';
 
 export default {
   name: 'preview',
-  props: ['text', 'fontName'],
+  props: ['text', 'fontName', 'fontAuthor'],
 
   watch: {
     text: function(newText) {
@@ -39,7 +40,7 @@ export default {
     },
 
     generateText: function() {
-      const previewText = this.$el.querySelector('.preview__text');
+      const previewText = this.$refs.text;
 
       figlet(this.text, this.fontName, function(err, text) {
         previewText.textContent = text;
@@ -53,25 +54,28 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../sass/vars';
+
 .preview {
-  margin-bottom: 32px;
+  overflow: hidden;
+  padding: 12px;
 }
 
 .preview__name {
-  margin: 0;
-  font-size: 14px;
-  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  font-family: $font-mono;
+  font-weight: 400;
+  color: $muted;
 }
 
 .preview__text {
   margin: 0;
-  // max-width: 100%;
-  // overflow: hidden;
   cursor: pointer;
   font-size: 12px;
-
+  font-family: $font-mono;
   // &::selection {
-  //   background-color: #a7541a;
+  //   background-color: yellow;
   // }
 }
 
