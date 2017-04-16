@@ -1,17 +1,30 @@
 <template>
   <div class="preview">
     <h2 class="preview__name">{{ fontName }} by {{ fontAuthor }}</h2>
-    <pre ref="text" class="preview__text" @click="selectText"></pre>
 
+    <pre v-if="loaded" ref="text" class="preview__text" @click="selectText">Loading...</pre>
+    <spinner v-else />
   </div>
 </template>
 
 <script>
 import figlet from 'figlet';
+import Spinner from '../components/Spinner.vue';
 
 export default {
   name: 'preview',
+
+  components: {
+    Spinner
+  },
+
   props: ['text', 'fontName', 'fontAuthor'],
+
+  data() {
+    return {
+      loaded: false,
+    }
+  },
 
   watch: {
     text: function(newText) {
@@ -19,12 +32,33 @@ export default {
     }
   },
 
-  mounted: function() {
+  created() {
+    figlet.defaults({fontPath: 'src/assets/fonts'});
+  },
+
+  mounted() {
     this.generateText();
   },
 
   methods: {
-    selectText: function(event) {
+    generateText() {
+      const previewText = this.$refs.text;
+
+      figlet(this.text, this.fontName, function(err, text) {
+        if (this.loaded) {
+          this.updateText(text);
+        } else {
+          this.loaded = true;
+          this.$nextTick(this.updateText.bind(this, text))
+        }
+      }.bind(this));
+    },
+
+    updateText(text) {
+      this.$refs.text.textContent = text;
+    },
+
+    selectText(event) {
       // Text selection code taken from http://stackoverflow.com/a/987376/400407
       if (document.body.createTextRange) {
           let range = document.body.createTextRange();
@@ -37,16 +71,16 @@ export default {
           selection.removeAllRanges();
           selection.addRange(range);
       }
-    },
+      try {
+        // copy text
+        document.execCommand('copy');
+        this.$emit('copied');
+      }
+      catch (err) {
+        // alert('please press Ctrl/Cmd+C to copy');
+      }
 
-    generateText: function() {
-      const previewText = this.$refs.text;
-
-      figlet(this.text, this.fontName, function(err, text) {
-        previewText.textContent = text;
-      });
     }
-
   }
 }
 
@@ -59,14 +93,17 @@ export default {
 .preview {
   overflow: hidden;
   padding: 12px;
+  // background-color: #272822;
 }
 
 .preview__name {
   margin: 0 0 8px 0;
-  font-size: 12px;
+  font-size: 10px;
   font-family: $font-mono;
   font-weight: 400;
   color: $muted;
+  text-transform: uppercase;
+  // display: none;
 }
 
 .preview__text {

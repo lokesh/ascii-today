@@ -1,123 +1,72 @@
 <template>
   <div class="app">
-    <div class="header">
-      <textarea class="text-input" v-model="text" spellcheck="false" autofocus></textarea>
-    </div>
-    <section ref="previews" class="previews previews--cols-3">
+
+    <preview-control ref="control" :initial-text="text" @input="onPreviewControlInput"></preview-control>
+
+    <section ref="previews" :class="['previews', 'previews--cols-' + colCount]">
       <template v-for="font in fonts">
         <preview :text="text" :font-name="font.name" :font-author="font.author"></preview>
       </template>
     </section>
+
   </div>
 </template>
 
 <script>
-import figlet from 'figlet';
+import {fonts as fonts} from './data/fonts.json';
 import Preview from './components/Preview.vue';
+import PreviewControl from './components/PreviewControl.vue';
 
 export default {
   name: 'app',
 
   components: {
-    Preview
+    Preview,
+    PreviewControl
   },
 
-  data: function() {
+  data() {
     return {
-      text: 'Tester',
+      windowWidth: '',
+      text: 'Bop',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
-      fonts: [
-        {
-          name: '3D Diagonal',
-          author: 'nabis, LG Beard, Markus Gebhard and others'
-        },
-        {
-          name: 'Basic',
-          author: 'Craig O\'Flaherty'
-        },
-        { name: 'Standard',
-          author: 'Glenn Chappell & Ian Chai'
-        },
-        {
-          name: 'Ghost',
-          author: 'myflix'
-        },
-        {
-          name: 'Cola',
-          author: 'MikeChat'
-        }, // temp
-        {
-          name: 'Contessa',
-          author: 'Christopher Joseph Pirillo'
-        }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-        { name: '3D Diagonal' },
-        { name: 'Acrobatic' }, // temp
-        { name: 'Basic' },
-        { name: 'Standard' },
-        { name: 'Ghost' },
-        { name: 'Cola' }, // temp
-        { name: 'Contessa' }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-        { name: '3D Diagonal' },
-        { name: 'Acrobatic' }, // temp
-        { name: 'Basic' },
-        { name: 'Standard' },
-        { name: 'Ghost' },
-        { name: 'Cola' }, // temp
-        { name: 'Contessa' }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-        { name: '3D Diagonal' },
-        { name: 'Acrobatic' }, // temp
-        { name: 'Basic' },
-        { name: 'Standard' },
-        { name: 'Ghost' },
-        { name: 'Cola' }, // temp
-        { name: 'Contessa' }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-        { name: 'Basic' },
-        { name: 'Standard' },
-        { name: 'Ghost' },
-        { name: 'Cola' }, // temp
-        { name: 'Contessa' }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-        { name: '3D Diagonal' },
-        { name: 'Acrobatic' }, // temp
-        { name: 'Basic' },
-        { name: 'Standard' },
-        { name: 'Ghost' },
-        { name: 'Cola' }, // temp
-        { name: 'Contessa' }, // temp
-        { name: 'Cybermedium' }, // temp
-        { name: 'Cyberlarge' }, // temp
-      ]
+      colCount: '3',
+      fonts: fonts
     }
   },
 
-  created() {
-  // Set font path and preload fonts
-    figlet.defaults({fontPath: 'src/assets/fonts'});
-    figlet.preloadFonts(['Standard', 'Ghost'], ready);
+  watch: {
+    text: function(val) {
+      this.updateCols();
+    }
   },
 
   mounted() {
-    // DEBUGGING CODE
-    let vm = this;
+    this.updateCols();
+    window.addEventListener('resize', this.updateCols);
+  },
 
-    document.addEventListener('keypress', function(event) {
-      if ([49, 50, 51, 52, 53].indexOf(event.keyCode) !== -1 ) {
-        let c = vm.$refs.previews.classList;
-        let a = [1, 2, 3, 4, 5].map(val => 'previews--cols-' + val)
-        c.remove(...a);
-        c.add('previews--cols-' + (parseInt(event.keyCode, 10) - 48));
+  methods: {
+    updateCols() {
+      this.windowWidth = document.documentElement.clientWidth;
+      this.text.length ;
+
+      const maxCols = 8;
+      const letterWidth = 80; // ~width of a single ascii styled letter
+      const padding = 16;     // Left padding of each column
+      let previewWidth = (this.text.length * letterWidth) + padding;
+
+      // Using an approximate width of a preview, calc how many columns fit in the window.
+      // Limit column count between 1 and maxCols.
+      this.colCount = Math.floor(this.windowWidth / previewWidth);
+      this.colCount = Math.max(Math.min(this.colCount, maxCols), 1);
+    },
+
+    onPreviewControlInput(val) {
+      if (typeof val !== 'undefined') {
+        this.text = val;
       }
-    })
-
+    },
   }
 }
 
@@ -130,33 +79,8 @@ function ready() {
 <style lang="sass" scoped>
 @import '/sass/vars';
 
-$header-height: 36px;
-
 .app {
   padding-top: $header-height;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: $header-height;
-}
-
-.text-input {
-  width: 100%;
-  height: $header-height;
-  padding: 4px;
-  background-color: yellow;
-  text-align: center;
-  border: 0;
-  border-bottom: 1px solid #eee;
-  font-family: $font-mono;
-  font-size: 24px;
-  outline: none;
-  resize: none;
-  overflow: hidden;
 }
 
 .previews {
@@ -219,6 +143,36 @@ $header-height: 36px;
     }
 
     .preview:nth-child(5n) {
+      border-right: 0;
+    }
+  }
+
+  .previews--cols-6 {
+    .preview {
+      width: 16.6%;
+    }
+
+    .preview:nth-child(6n) {
+      border-right: 0;
+    }
+  }
+
+ .previews--cols-7 {
+    .preview {
+      width: 14.2%;
+    }
+
+    .preview:nth-child(7n) {
+      border-right: 0;
+    }
+  }
+
+ .previews--cols-8 {
+    .preview {
+      width: 12.5%;
+    }
+
+    .preview:nth-child(8n) {
       border-right: 0;
     }
   }
