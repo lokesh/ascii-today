@@ -38,16 +38,9 @@ module.exports = {
   resolve: {
     alias: {
       'figlet': 'figlet/lib/figlet',
-      'jquery': 'jquery/dist/jquery',
       'vue$': 'vue/dist/vue.common.js',
     }
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery'
-    })
-  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
