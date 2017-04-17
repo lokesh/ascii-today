@@ -1,14 +1,21 @@
 <template>
-  <div class="preview">
-    <h2 class="preview__name">{{ fontName }} by {{ fontAuthor }}</h2>
+  <div class="preview" @click="selectText">
+    <div :class="[
+        'copied-msg',
+        {'open': wasRecentlyClicked}
+      ]">
+      Copied to clipboard
+    </div>
+    <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
 
-    <pre v-if="loaded" ref="text" class="preview__text" @click="selectText">Loading...</pre>
+    <pre v-if="loaded" ref="text" class="text"></pre>
     <spinner v-else />
   </div>
 </template>
 
 <script>
 import figlet from 'figlet';
+import TextSelection from '../utils/TextSelection';
 import Spinner from '../components/Spinner.vue';
 
 export default {
@@ -23,6 +30,7 @@ export default {
   data() {
     return {
       loaded: false,
+      wasRecentlyClicked: false
     }
   },
 
@@ -58,22 +66,20 @@ export default {
       this.$refs.text.textContent = text;
     },
 
-    selectText(event) {
-      // Text selection code taken from http://stackoverflow.com/a/987376/400407
-      if (document.body.createTextRange) {
-          let range = document.body.createTextRange();
-          range.moveToElementText(event.target);
-          range.select();
-      } else if (window.getSelection) {
-          let selection = window.getSelection();
-          let range = document.createRange();
-          range.selectNodeContents(event.target);
-          selection.removeAllRanges();
-          selection.addRange(range);
-      }
+    selectText() {
+      if (this.wasRecentlyClicked) return;
+
+      this.wasRecentlyClicked = true;
+      setTimeout(function() {
+        this.wasRecentlyClicked = false;
+      }.bind(this), 1200)
+
+      TextSelection.select(this.$refs.text);
+
       try {
         // copy text
         document.execCommand('copy');
+        TextSelection.deselect()
         this.$emit('copied');
       }
       catch (err) {
@@ -91,12 +97,31 @@ export default {
 @import '../sass/vars';
 
 .preview {
+  position: relative;
   overflow: hidden;
-  padding: 12px;
-  // background-color: #272822;
+  padding: 20px;
+  background-color: $bg-color;
+
+  &:hover {
+    background-color: lighten($bg-color, 5%);
+    cursor: pointer;
+  }
+
+  &:active {
+    color: $bg-color;
+    background-color: $color;
+
+    .text {
+      color: $bg-color;
+    }
+
+    .name {
+      color: $bg-color;
+    }
+  }
 }
 
-.preview__name {
+.name {
   margin: 0 0 8px 0;
   font-size: 10px;
   font-family: $font-mono;
@@ -106,15 +131,35 @@ export default {
   // display: none;
 }
 
-.preview__text {
+.text {
   margin: 0;
-  cursor: pointer;
+  color: $color;
   font-size: 12px;
   font-family: $font-mono;
-  // &::selection {
-  //   background-color: yellow;
-  // }
+
+  &::selection {
+    background-color: $red;
+  }
 }
 
+.copied-msg {
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  width: 90px;
+  padding: 8px;
+  color: $bg-color;
+  font-size: 12px;
+  background-color: $color;
+  font-family: $font-mono;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%) translateY(-50%);
+  transition: transform 0.2s cubic-bezier(0.17, 0.67, 0.18, 0.96);
+
+  &.open {
+    transform: translateX(-50%) translateY(100px);
+  }
+}
 
 </style>

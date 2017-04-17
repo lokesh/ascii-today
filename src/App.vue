@@ -4,18 +4,20 @@
     <preview-control ref="control" :initial-text="text" @input="onPreviewControlInput"></preview-control>
 
     <section ref="previews" :class="['previews', 'previews--cols-' + colCount]">
-      <template v-for="font in fonts">
-        <preview :text="text" :font-name="font.name" :font-author="font.author"></preview>
-      </template>
+        <preview v-for="font in fonts" :text="text" :font-name="font.name" :font-author="font.author"></preview>
     </section>
 
   </div>
 </template>
 
 <script>
-import {fonts as fonts} from './data/fonts.json';
+import {fonts as fontList} from './data/fonts.json';
 import Preview from './components/Preview.vue';
 import PreviewControl from './components/PreviewControl.vue';
+
+let fontListFiltered = fontList.filter( function(font) {
+  return !font.hidden;
+});
 
 export default {
   name: 'app',
@@ -28,10 +30,10 @@ export default {
   data() {
     return {
       windowWidth: '',
-      text: 'Bop',
+      text: 'Button',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       colCount: '3',
-      fonts: fonts
+      fonts: fontListFiltered
     }
   },
 
@@ -46,14 +48,18 @@ export default {
     window.addEventListener('resize', this.updateCols);
   },
 
+  destroyed() {
+    window.removeEventListener('resize', this.updateCols);
+  },
+
   methods: {
     updateCols() {
       this.windowWidth = document.documentElement.clientWidth;
       this.text.length ;
 
       const maxCols = 8;
-      const letterWidth = 80; // ~width of a single ascii styled letter
-      const padding = 16;     // Left padding of each column
+      const letterWidth = 60; // ~width of a single ascii styled letter
+      const padding = 20;     // Left padding of each column
       let previewWidth = (this.text.length * letterWidth) + padding;
 
       // Using an approximate width of a preview, calc how many columns fit in the window.
@@ -81,6 +87,7 @@ function ready() {
 
 .app {
   padding-top: $header-height;
+  background-color: $bg-color;
 }
 
 .previews {

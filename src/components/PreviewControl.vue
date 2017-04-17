@@ -22,7 +22,7 @@
     },
 
     created() {
-      this.text = this.initalText;
+      this.text = this.initialText;
     },
 
     mounted() {
@@ -68,6 +68,7 @@
 
 .preview-control {
   position: fixed;
+  z-index: 100;
   top: 0;
   right: 0;
   left: 0;
@@ -78,14 +79,15 @@
 .input {
   width: 100%;
   height: $header-height;
-  padding: 4px;
-  background-color: yellow;
+  padding: 16px;
+  color: $bg-color;
+  background-color: $color;
   text-align: center;
   border: 0;
-  border-bottom: 1px solid #eee;
+  // border-bottom: 1px solid #eee;
   font-family: $font-mono;
   font-size: 24px;
-
+  outline: none;
   resize: none;
   overflow: hidden;
 }

@@ -4,11 +4,7 @@
 
 <script>
   export default {
-    name: 'spinner',
-
-    mounted() {
-
-    }
+    name: 'spinner'
   }
 </script>
 
