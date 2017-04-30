@@ -8,7 +8,7 @@
     </div>
     <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
 
-    <pre v-if="loaded" ref="text" class="text"></pre>
+    <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
     <spinner v-else />
   </div>
 </template>
@@ -30,7 +30,9 @@ export default {
   data() {
     return {
       loaded: false,
-      wasRecentlyClicked: false
+      wasRecentlyClicked: false,
+      generatedText: '',
+      analyticsClickEventSent: false
     }
   },
 
@@ -63,11 +65,17 @@ export default {
     },
 
     updateText(text) {
-      this.$refs.text.textContent = text;
+      this.generatedText = text;
     },
 
     selectText() {
       if (this.wasRecentlyClicked) return;
+
+      // GA event
+      // Only send max once per ~session.
+      if (!this.analyticsClickEventSent) {
+        ga('send', 'event', 'Font Preview', 'Click', this.fontName, 1);
+      }
 
       this.wasRecentlyClicked = true;
       setTimeout(function() {
@@ -108,16 +116,7 @@ export default {
   }
 
   &:active {
-    color: $bg-color;
-    background-color: $color;
-
-    .text {
-      color: $bg-color;
-    }
-
-    .name {
-      color: $bg-color;
-    }
+    background-color: lighten($bg-color, 20%);
   }
 }
 
@@ -128,6 +127,9 @@ export default {
   font-weight: 400;
   color: $muted;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   // display: none;
 }
 
@@ -136,15 +138,12 @@ export default {
   color: $color;
   font-size: 12px;
   font-family: $font-mono;
-
-  &::selection {
-    background-color: $red;
-  }
 }
 
 .copied-msg {
   position: absolute;
-  top: -25%;
+  display: none;
+  top: 50%;
   left: 50%;
   width: 90px;
   padding: 8px;
@@ -155,10 +154,9 @@ export default {
   text-align: center;
   text-transform: uppercase;
   transform: translateX(-50%) translateY(-50%);
-  transition: transform 0.2s cubic-bezier(0.17, 0.67, 0.18, 0.96);
 
   &.open {
-    transform: translateX(-50%) translateY(100px);
+    display: block;
   }
 }
 

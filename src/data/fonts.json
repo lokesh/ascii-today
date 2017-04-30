@@ -1,11 +1,6 @@
 {
   "fonts": [
     {
-      "name": "3D Diagonal",
-      "author": "nabis, LG Beard, Markus Gebhard and others",
-      "hidden": true
-    },
-    {
       "name": "Cola",
       "author": "MikeChat"
     },
@@ -20,11 +15,6 @@
     {
       "name": "Cyberlarge",
       "author": "Kent Nassen"
-    },
-    {
-      "name": "Doh",
-      "author": "Curtis Wanner",
-      "hidden": true
     },
     {
       "name": "Doom",
@@ -127,10 +117,6 @@
       "author": "Wendell Hicken"
     },
     {
-      "name": "Small",
-      "author": "Glenn Chappell"
-    },
-    {
       "name": "Speed",
       "author": "Claude Martins"
     },
@@ -141,6 +127,10 @@
     {
       "name": "Standard",
       "author": "Glenn Chappell & Ian Chai"
+    },
+    {
+      "name": "Small",
+      "author": "Glenn Chappell"
     },
     {
       "name": "Star Wars",
@@ -181,6 +171,14 @@
     {
       "name": "Weird",
       "author": "Bas Meijer"
+    },
+    {
+      "name": "3D Diagonal",
+      "author": "nabis, LG Beard, Markus Gebhard and others"
+    },
+    {
+      "name": "Doh",
+      "author": "Curtis Wanner"
     }
   ]
 }

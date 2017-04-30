@@ -1,21 +1,35 @@
 <template>
   <div class="app">
+      <info-panel class="info-panel" v-if="isInfoPanelOpen" />
+      <info-control class="info-control" :open="isInfoPanelOpen" @click.native="toggleInfoPanel"></info-control>
+      <top-bar ref="control" :initial-text="text" @textChange="onPreviewControlInput"></top-bar>
 
-    <preview-control ref="control" :initial-text="text" @input="onPreviewControlInput"></preview-control>
+      <section v-if="text.length > 0" ref="previews" :class="['previews', 'previews--cols-' + colCount]">
+          <preview v-for="font in fonts" :text="text" :font-name="font.name" :font-author="font.author"></preview>
+      </section>
+      <template v-else>
+        <div class="empty-state">
+          <br />
+          ^<br />
+          |<br />
+          |<br />
+&nbsp;+---------+----------+<br />
+&nbsp;| Just start typing! |<br />
+&nbsp;+--------------------+<br />
 
-    <section ref="previews" :class="['previews', 'previews--cols-' + colCount]">
-        <preview v-for="font in fonts" :text="text" :font-name="font.name" :font-author="font.author"></preview>
-    </section>
-
+        </div>
+      </template>
   </div>
 </template>
 
 <script>
 import {fonts as fontList} from './data/fonts.json';
+import InfoControl from './components/InfoControl.vue';
+import InfoPanel from './components/InfoPanel.vue';
 import Preview from './components/Preview.vue';
-import PreviewControl from './components/PreviewControl.vue';
+import TopBar from './components/TopBar.vue';
 
-let fontListFiltered = fontList.filter( function(font) {
+const fontListFiltered = fontList.filter( function(font) {
   return !font.hidden;
 });
 
@@ -23,17 +37,21 @@ export default {
   name: 'app',
 
   components: {
+    InfoControl,
+    InfoPanel,
     Preview,
-    PreviewControl
+    TopBar
   },
 
   data() {
     return {
-      windowWidth: '',
-      text: 'Button',
-      // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       colCount: '3',
-      fonts: fontListFiltered
+      fonts: fontListFiltered,
+      isInfoPanelOpen: false,
+
+      text: '',
+      // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
+      windowWidth: '',
     }
   },
 
@@ -55,12 +73,21 @@ export default {
   methods: {
     updateCols() {
       this.windowWidth = document.documentElement.clientWidth;
-      this.text.length ;
 
       const maxCols = 8;
       const letterWidth = 60; // ~width of a single ascii styled letter
       const padding = 20;     // Left padding of each column
-      let previewWidth = (this.text.length * letterWidth) + padding;
+
+      // Length of the longest line in the textarea
+      let longestLine = 0;
+      const lines = this.text.split('\n');
+      for (let line of lines) {
+        if (line.length > longestLine) {
+          longestLine = line.length;
+        }
+      }
+
+      let previewWidth = (longestLine * letterWidth) + padding;
 
       // Using an approximate width of a preview, calc how many columns fit in the window.
       // Limit column count between 1 and maxCols.
@@ -73,6 +100,14 @@ export default {
         this.text = val;
       }
     },
+
+    toggleInfoPanel() {
+      this.isInfoPanelOpen = !this.isInfoPanelOpen;
+
+      // GA event
+      let gaEventLabel = this.isInfoPanelOpen ? 'Open': 'Close';
+      ga('send', 'event', 'Info Control', gaEventLabel);
+    }
   }
 }
 
@@ -82,22 +117,46 @@ function ready() {
 
 </script>
 
+<style lang="sass">
+@import './sass/vars';
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: $select-color;
+}
+</style>
+
 <style lang="sass" scoped>
 @import '/sass/vars';
 
+
 .app {
   padding-top: $header-height;
-  background-color: $bg-color;
-}
 
-.previews {
-  display: flex;
-  flex-wrap: wrap;
-}
+  .info-control {
+    position: fixed;
+    top: ($header-height / 2) - ($info-control-height / 2);
+    right: ($header-height / 2) - ($info-control-width / 2);
+    z-index: 30;
+    font-weight: bold;
+  }
 
-.app {
+  .info-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+  }
 
-  .previews {}
+  .previews {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
   .preview {
     border-right: $border;
@@ -185,5 +244,10 @@ function ready() {
   }
 }
 
+.empty-state {
+  text-align: center;
+  color: white;
+  font-family: $font-mono;
+}
 
 </style>

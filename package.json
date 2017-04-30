@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "figlet": "^1.2.0",
-    "vue": "^2.1.0"
+    "vue": "^2.1.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
