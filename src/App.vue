@@ -127,22 +127,20 @@ function ready() {
 ::selection {
   background-color: $select-color;
 }
+
+a {
+  color: $color;
+}
+
 </style>
+
+
 
 <style lang="sass" scoped>
 @import '/sass/vars';
 
-
 .app {
   padding-top: $header-height;
-
-  .info-control {
-    position: fixed;
-    top: ($header-height / 2) - ($info-control-height / 2);
-    right: ($header-height / 2) - ($info-control-width / 2);
-    z-index: 30;
-    font-weight: bold;
-  }
 
   .info-panel {
     position: fixed;
@@ -248,6 +246,23 @@ function ready() {
   text-align: center;
   color: white;
   font-family: $font-mono;
+}
+
+.info-control {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 30;
+  font-weight: bold;
+}
+
+@media (min-width: 760px) {
+  .info-control {
+    top: ($header-height / 2) - ($info-control-height / 2);
+    right: ($header-height / 2) - ($info-control-width / 2);
+    bottom: auto;
+    left: auto;
+  }
 }
 
 </style>

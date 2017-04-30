@@ -1,7 +1,6 @@
 <template>
   <div class="top-bar" @click="$refs.input.focus()">
     <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" :rows="rows" autofocus></textarea>
-    <pre ref="hidden" :class="'hidden-text rows-' + rows">{{ text }}</pre>
   </div>
 </template>
 
@@ -20,7 +19,6 @@
     watch: {
       'text': function() {
         this.sizeInput();
-        this.checkOverlap();
 
         this.$emit('textChange', this.text);
       }
@@ -66,12 +64,7 @@
       sizeInput() {
         let lines = this.text.split('\n').length;
         this.rows = (lines < 3) ? lines : 3;
-      },
-
-      checkOverlap() {
-        this.$refs.hidden.width()
       }
-
     }
   }
 </script>
@@ -114,29 +107,6 @@
   &::selection {
     background-color: $select-color;
   }
-
-  &.rows-1 {
-    font-size: 32px;
-  }
-
-  &.rows-2 {
-    font-size: 24px
-  }
-
-  &.rows-3 {
-    font-size: 16px;
-  }
-}
-
-.hidden-text {
-  position: absolute;
-  color: red;
-  top: 100px;
-  text-align: center;
-  font-family: $font-mono;
-  font-weight: bold;
-  font-size: 24px;
-  z-index: 1000;
 
   &.rows-1 {
     font-size: 32px;

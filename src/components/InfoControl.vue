@@ -27,11 +27,7 @@
   font-family: $font-mono;
   cursor: pointer;
   outline: none;
-
-  // &.open {
-  //   color: $color;
-  //   background-color: $bg-color;
-  // }
+  user-select:  none;
 }
 
 
