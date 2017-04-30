@@ -2,8 +2,6 @@
 
 A super-fast ASCII title generator.
 
-Spruce up your code comments and readmes. Have a little fun!
-
 ---
 
 This is a simple Vue.js front-end built on top of the hard work done by the font
