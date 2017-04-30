@@ -8,14 +8,11 @@
     <!-- Hack: Prevent favicon request errors -->
     <link rel="icon" href="data:,">
 
-    <style lang="sass">
-      * {
-        box-sizing: border-box;
-      }
-
+    <style>
       body {
         margin: 0;
         padding: 0;
+        background-color: #000;
       }
     </style>
 
@@ -25,6 +22,17 @@
     <div id="app"></div>
 
     <script src="/dist/build.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-2196019-5', 'auto');
+      ga('send', 'pageview');
+
+    </script>
 
   </body>
 </html>
