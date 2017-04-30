@@ -1,7 +1,13 @@
-# ascii-today
+# ASCII Today
 
-This is a simple front-end built on top of the hard work done by the original font
-creators and patorjk who wrote the figlet.js font parser
+A super-fast ASCII title generator.
+
+Spruce up your code comments and readmes. Have a little fun!
+
+---
+
+This is a simple Vue.js front-end built on top of the hard work done by the font
+creators and patorjk who wrote the [figlet.js](https://github.com/patorjk/figlet.js) font parser.
 
 ## Build basics
 
@@ -15,6 +21,4 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-## How the app works
 
