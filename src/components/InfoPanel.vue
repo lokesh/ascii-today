@@ -13,7 +13,7 @@
 -----------------------</pre>
 
 <p>A super-fast ASCII title generator.</p>
-<p>Spruce up your code comments and readmes. Have a little fun!</p>
+<p>Spruce up your code comments and readmes. Have fun!</p>
 
 <p>By <a href="//lokeshdhakar.com">Lokesh Dhakar</a> - <a href="https://github.com/lokesh/ascii-today">Code on Github</a></p>
     </div>
@@ -33,7 +33,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  padding: 20px 20px 60px 20px;
+  padding: 20px 20px 70px 20px;
   color: $color;
   background-color: $bg-color;
   font-family: $font-mono;

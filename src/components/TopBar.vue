@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar" @click="$refs.input.focus()">
-    <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" :rows="rows" autofocus></textarea>
+    <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" :rows="rows" autofocus></textarea>
   </div>
 </template>
 

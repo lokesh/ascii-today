@@ -10,11 +10,13 @@
     },
     {
       "name": "Cybermedium",
-      "author": "Kent Nassen"
+      "author": "Kent Nassen",
+      "numbers": false
     },
     {
       "name": "Cyberlarge",
-      "author": "Kent Nassen"
+      "author": "Kent Nassen",
+      "numbers": false
     },
     {
       "name": "Doom",
@@ -30,7 +32,8 @@
     },
     {
       "name": "Isometric2",
-      "author": "Kent Nassen"
+      "author": "Kent Nassen",
+      "numbers": false
     },
     {
       "name": "Larry 3D",

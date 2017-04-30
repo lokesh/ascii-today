@@ -1,11 +1,13 @@
 <template>
   <div class="preview" @click="selectText">
-    <div :class="[
+    <pre :class="[
         'copied-msg',
         {'open': wasRecentlyClicked}
-      ]">
-      Copied to clipboard
-    </div>
+      ]">      __
+     / / Copied
+__  / /  to
+\ \/ /   clipboard
+ \__/    </pre>
     <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
 
     <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
@@ -74,6 +76,7 @@ export default {
       // GA event
       // Only send max once per ~session.
       if (!this.analyticsClickEventSent) {
+        this.analyticsClickEventSent = true;
         ga('send', 'event', 'Font Preview', 'Click', this.fontName, 1);
       }
 
@@ -145,13 +148,13 @@ export default {
   display: none;
   top: 50%;
   left: 50%;
-  width: 90px;
-  padding: 8px;
+  width: 146px;
+  padding: 0 8px 8px 8px;
+  margin: 0;
   color: $bg-color;
   font-size: 12px;
   background-color: $color;
   font-family: $font-mono;
-  text-align: center;
   text-transform: uppercase;
   transform: translateX(-50%) translateY(-50%);
 
