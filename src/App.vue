@@ -120,7 +120,7 @@ export default {
 }
 
 a {
-  color: $color;
+  color: $link-color;
 }
 
 </style>

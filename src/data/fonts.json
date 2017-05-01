@@ -1,12 +1,29 @@
 {
   "fonts": [
     {
+      "name": "Broadway KB",
+      "author": "myflix"
+    },
+    {
+      "name": "Big Money-nw",
+      "author": "Nathan Bloomfield"
+    },
+    {
       "name": "Cola",
-      "author": "MikeChat"
+      "author": "MikeChat",
+      "hidden": true
+    },
+    {
+      "name": "Computer",
+      "author": "Mike Rosulek"
     },
     {
       "name": "Contessa",
       "author": "Christopher Joseph Pirillo"
+    },
+    {
+      "name": "Cricket",
+      "author": "Leslie Bates"
     },
     {
       "name": "Cybermedium",
@@ -16,15 +33,25 @@
     {
       "name": "Cyberlarge",
       "author": "Kent Nassen",
-      "numbers": false
+      "numbers": false,
+      "hidden": true
     },
     {
       "name": "Doom",
       "author": "Frans P. de Vries"
     },
     {
-      "name": "Efti Italic",
-      "author": "Michel Eftimakis"
+      "name": "Double",
+      "author": "Kent Nassen",
+      "numbers": false
+    },
+    {
+      "name": "Line Blocks",
+      "author": "Bateau"
+    },
+    {
+      "name": "Fire Font-k",
+      "author": "MJP"
     },
     {
       "name": "Ghost",
@@ -40,8 +67,8 @@
       "author": "Larry Gelberg"
     },
     {
-      "name": "LCD",
-      "author": "Karl von Laudermann"
+      "name": "3d-ASCII",
+      "author": "?"
     },
     {
       "name": "Lean",
@@ -50,6 +77,10 @@
     {
       "name": "Mini",
       "author": "Glenn Chappell"
+    },
+    {
+      "name": "Modular",
+      "author": "MJP"
     },
     {
       "name": "Nancyj",
@@ -80,10 +111,6 @@
       "author": "David Villegas"
     },
     {
-      "name": "Roman",
-      "author": "Nick Miners"
-    },
-    {
       "name": "Rounded",
       "author": "Nick Miners"
     },
@@ -100,6 +127,11 @@
       "author": "Bruce M. Binder"
     },
     {
+      "name": "Soft",
+      "author": "myflix"
+    },
+
+    {
       "name": "Shadow",
       "author": "Glenn Chappell"
     },
@@ -114,10 +146,6 @@
     {
       "name": "Small Slant",
       "author": "Glenn Chappell"
-    },
-    {
-      "name": "SL Script",
-      "author": "Wendell Hicken"
     },
     {
       "name": "Speed",
@@ -164,16 +192,20 @@
       "author": "Wendell Hicken"
     },
     {
-      "name": "Univers",
-      "author": "Glenn Chappell"
-    },
-    {
       "name": "Wavy",
       "author": "Brian Krog"
     },
     {
       "name": "Weird",
       "author": "Bas Meijer"
+    },
+    {
+      "name": "Univers",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Colossal",
+      "author": "Jonathon"
     },
     {
       "name": "3D Diagonal",

@@ -1,14 +1,14 @@
 <template>
   <div class="info-panel">
     <div class="text">
-<pre>
+<pre class="title">
 -----------------------
 |       __  _ ___ ___ |
 |  /\  (_  /   |   |  |
 | /--\ __) \_ _|_ _|_ |
 | ___                 |
-|  |  _   _|  _.      |
-|  | (_) (_| (_| \/   |
+|  |  _   _|  _.    | |
+|  | (_) (_| (_| \/ o |
 |                /    |
 -----------------------</pre>
 
@@ -48,6 +48,11 @@
 .text {
   max-width: 320px;
 }
+
+.title {
+  font-weight: bold;
+}
+
 
 @media (min-width: 760px) {
   .info-panel {

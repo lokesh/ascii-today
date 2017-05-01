@@ -20,10 +20,11 @@
 @import '../sass/vars';
 
 .control {
+  box-sizing: content-box;
   width: $info-control-width * 1.5;
   height: $info-control-height * 1.5;
-  padding-left: 0;
-  padding-right: 0;
+  line-height: $info-control-height * 1.5;
+  padding: 0;
   text-align: center;
   background-color: $color;
   border: 2px solid $border-color;
@@ -37,6 +38,7 @@
   .control {
     width: $info-control-width;
     height: $info-control-height;
+    line-height: $info-control-height;
   }
 }
 
