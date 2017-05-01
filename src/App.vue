@@ -41,7 +41,7 @@ export default {
       fonts: fontListFiltered,
       isInfoPanelOpen: false,
 
-      text: '123abc',
+      text: '',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       windowWidth: '',
     }
