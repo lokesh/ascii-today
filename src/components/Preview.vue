@@ -1,13 +1,11 @@
 <template>
   <div class="preview" @click="selectText">
-    <pre :class="[
-        'copied-msg',
-        {'open': wasRecentlyClicked}
-      ]">      __
+<pre class="clip-msg" v-if="wasRecentlyClicked">      __
      / / Copied
 __  / /  to
 \ \/ /   clipboard
  \__/    </pre>
+
     <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
 
     <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
@@ -31,10 +29,10 @@ export default {
 
   data() {
     return {
-      loaded: false,
-      wasRecentlyClicked: false,
+      analyticsClickEventSent: false,
       generatedText: '',
-      analyticsClickEventSent: false
+      loaded: false,
+      wasRecentlyClicked: false
     }
   },
 
@@ -81,7 +79,8 @@ export default {
       }
 
       this.wasRecentlyClicked = true;
-      setTimeout(function() {
+
+      let clickTimeout = setTimeout(function() {
         this.wasRecentlyClicked = false;
       }.bind(this), 1200)
 
@@ -114,12 +113,12 @@ export default {
   background-color: $bg-color;
 
   &:hover {
-    background-color: lighten($bg-color, 5%);
+    background-color: lighten($bg-color, 15%);
     cursor: pointer;
   }
 
   &:active {
-    background-color: lighten($bg-color, 20%);
+    background-color: lighten($bg-color, 30%);
   }
 }
 
@@ -143,24 +142,29 @@ export default {
   font-family: $font-mono;
 }
 
-.copied-msg {
+.clip-msg {
   position: absolute;
-  display: none;
   top: 50%;
   left: 50%;
-  width: 146px;
+  width: 140px;
   padding: 0 8px 8px 8px;
   margin: 0;
   color: $bg-color;
-  font-size: 12px;
+  font-size: 10px;
   background-color: $color;
   font-family: $font-mono;
   text-transform: uppercase;
   transform: translateX(-50%) translateY(-50%);
-
-  &.open {
-    display: block;
-  }
 }
+
+.clip-msg__check {
+  margin: 0 0 8px 0;
+}
+
+.clip-msg__text {
+  text-align: center;
+}
+
+
 
 </style>
