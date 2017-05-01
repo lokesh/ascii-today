@@ -113,12 +113,12 @@ export default {
   background-color: $bg-color;
 
   &:hover {
-    background-color: lighten($bg-color, 15%);
+    background-color: lighten($bg-color, 10%);
     cursor: pointer;
   }
 
   &:active {
-    background-color: lighten($bg-color, 30%);
+    background-color: lighten($bg-color, 15%);
   }
 }
 
