@@ -8,35 +8,27 @@
           <preview v-for="font in fonts" :text="text" :font-name="font.name" :font-author="font.author"></preview>
       </section>
       <template v-else>
-        <div class="empty-state">
-          <br />
-          ^<br />
-          |<br />
-          |<br />
-&nbsp;+---------+----------+<br />
-&nbsp;| Just start typing! |<br />
-&nbsp;+--------------------+<br />
-
-        </div>
+        <empty-state></empty-state>
       </template>
   </div>
 </template>
 
 <script>
+import figlet from 'figlet';
 import {fonts as fontList} from './data/fonts.json';
+import EmptyState from './components/EmptyState.vue';
 import InfoControl from './components/InfoControl.vue';
 import InfoPanel from './components/InfoPanel.vue';
 import Preview from './components/Preview.vue';
 import TopBar from './components/TopBar.vue';
 
-const fontListFiltered = fontList.filter( function(font) {
-  return !font.hidden;
-});
+const fontListFiltered = fontList.filter(font => !font.hidden);
 
 export default {
   name: 'app',
 
   components: {
+    EmptyState,
     InfoControl,
     InfoPanel,
     Preview,
@@ -49,7 +41,7 @@ export default {
       fonts: fontListFiltered,
       isInfoPanelOpen: false,
 
-      text: '',
+      text: '123abc',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       windowWidth: '',
     }
@@ -62,8 +54,12 @@ export default {
   },
 
   mounted() {
-    this.updateCols();
     window.addEventListener('resize', this.updateCols);
+
+    // Preload fonts
+    const fontNames = this.fonts.map(font => font.name)
+    figlet.defaults({fontPath: 'src/assets/fonts'});
+    figlet.preloadFonts(fontNames);
   },
 
   destroyed() {
@@ -110,11 +106,6 @@ export default {
     }
   }
 }
-
-function ready() {
-  console.log('preloaded!');
-}
-
 </script>
 
 <style lang="sass">

@@ -37,10 +37,17 @@ module.exports = {
   },
   resolve: {
     alias: {
+      'jquery': path.resolve(__dirname, 'src/utils/jquery.js'),
       'figlet': 'figlet/lib/figlet',
       'vue$': 'vue/dist/vue.common.js',
     }
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery'
+    })
+  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
