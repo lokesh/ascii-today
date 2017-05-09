@@ -5,7 +5,11 @@
       <top-bar ref="control" :initial-text="text" @textChange="onPreviewControlInput"></top-bar>
 
       <section v-if="text.length > 0" ref="previews" :class="['previews', 'previews--cols-' + colCount]">
-          <preview v-for="font in fonts" :text="text" :font-name="font.name" :font-author="font.author"></preview>
+        <template v-for="font in fonts">
+          <div class="preview-wrapper">
+            <preview :text="text" :font-name="font.name" :font-author="font.author"></preview>
+          </div>
+        </template>
       </section>
       <template v-else>
         <empty-state></empty-state>
@@ -72,7 +76,7 @@ export default {
 
       const maxCols = 8;
       const letterWidth = 60; // ~width of a single ascii styled letter
-      const padding = 20;     // Left padding of each column
+      const padding = 32;     // Left padding of each column
 
       // Length of the longest line in the textarea
       let longestLine = 0;
@@ -147,88 +151,86 @@ a {
     flex-wrap: wrap;
   }
 
-  .preview {
-    border-right: $border;
-    border-bottom: $border;
+  .preview-wrapper {
+    padding: 0 0 $gutter $gutter;
   }
 
   .previews--cols-1 {
-    .preview {
+    .preview-wrapper {
       width: 100%;
     }
   }
 
   .previews--cols-2 {
-    .preview {
+    .preview-wrapper {
       width: 50%;
     }
 
-    .preview:nth-child(2n+1) {
-
+    .preview-wrapper:nth-child(2n+1) {
     }
 
-    .preview:nth-child(2n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(2n) {
+      padding-right: $gutter;
     }
   }
 
   .previews--cols-3 {
-    .preview {
+    .preview-wrapper {
       width: 33.3%;
     }
 
-    .preview:nth-child(3n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(3n) {
+      padding-right: $gutter;
     }
   }
 
  .previews--cols-4 {
-    .preview {
+    .preview-wrapper {
       width: 25%;
     }
 
-    .preview:nth-child(4n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(4n) {
+      padding-right: $gutter;
     }
   }
 
  .previews--cols-5 {
-    .preview {
+    .preview-wrapper {
       width: 20%;
     }
 
-    .preview:nth-child(5n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(5n) {
+      padding-right: $gutter;
     }
   }
 
   .previews--cols-6 {
-    .preview {
+    .preview-wrapper {
       width: 16.6%;
     }
 
-    .preview:nth-child(6n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(6n) {
+      padding-right: $gutter;
     }
   }
 
  .previews--cols-7 {
-    .preview {
+    .preview-wrapper {
       width: 14.2%;
     }
 
-    .preview:nth-child(7n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(7n) {
+      padding-right: $gutter;
     }
   }
 
  .previews--cols-8 {
-    .preview {
+    .preview-wrapper {
       width: 12.5%;
     }
 
-    .preview:nth-child(8n) {
-      border-right: 0;
+    .preview-wrapper:nth-child(8n) {
+      padding-right: $gutter;
     }
   }
 }

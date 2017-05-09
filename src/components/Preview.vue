@@ -6,6 +6,7 @@ __  / /  to
 \ \/ /   clipboard
  \__/    </pre>
 
+    <div class="copy"></div>
     <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
 
     <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
@@ -56,7 +57,8 @@ export default {
 
       figlet(this.text, this.fontName, function(err, text) {
         if (this.loaded) {
-          this.updateText(text);
+          // Trim trailing spaces
+          this.updateText(text.replace(/\s+$/, ''));
         } else {
           this.loaded = true;
           this.$nextTick(this.updateText.bind(this, text))
@@ -109,37 +111,51 @@ export default {
 .preview {
   position: relative;
   overflow: hidden;
-  padding: 20px;
-  background-color: $bg-color;
-
+  height: 100%;
+  padding-top: 8px;
+  border-top: 2px solid $border-color;
   &:hover {
-    background-color: lighten($bg-color, 10%);
+    // .copy {
+    //   display: block;
+    // }
     cursor: pointer;
   }
 
-  &:active {
-    background-color: lighten($bg-color, 15%);
-  }
+  // &:active {
+  //   background-color: lighten($bg-color, 15%);
+  // }
+}
+
+.copy {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  // background-color: #fcab4c;
+  background-color: $muted;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
 }
 
 .name {
-  margin: 0 0 8px 0;
-  font-size: 10px;
-  font-family: $font-mono;
-  font-weight: 400;
   color: $muted;
+  font-family: $font-mono;
+  font-weight: 500;
+  font-size: 10px;
   text-transform: uppercase;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  // display: none;
+  margin: 0 0 8px 0;
 }
 
 .text {
   margin: 0;
-  color: $color;
+  color: lighten($color, 4%);
   font-size: 12px;
-  font-family: $font-mono;
+  font-family: Menlo, $font-mono;
+  line-height: 1.3em;
 }
 
 .clip-msg {

@@ -83,30 +83,31 @@
   right: 0;
   left: 0;
   height: $header-height;
-  background-color: $color;
   cursor: text;
+  padding-left: 16px;
+  background-color: $bg-color;
+  // border-bottom: 1px solid $border-color;
 }
 
 .input {
   width: 100%;
-  color: $bg-color;
+  padding-left: 16px;
+  color: $color;
   background-color: transparent;
-  text-align: center;
   border: 0;
-  font-family: $font-mono;
-  font-weight: bold;
+  font-family: Monaco, $font-mono;
   font-size: 32px;
   outline: none;
   resize: none;
   overflow: hidden;
 
-  &:focus {
-    background-color: $color;
-  }
+  // &:focus {
+  //   background-color: $color;
+  // }
 
-  &::selection {
-    background-color: $select-color;
-  }
+  // &::selection {
+  //   background-color: $select-color;
+  // }
 
   &.rows-1 {
     font-size: 32px;
