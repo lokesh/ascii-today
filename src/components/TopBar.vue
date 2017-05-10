@@ -12,14 +12,17 @@
     data: function() {
       return {
         text: '',
-        rows: 1
+        rows: 1,
+        lineLengths: []
       }
     },
 
     watch: {
       'text': function() {
-        this.sizeInput();
+        let lines = this.text.split('\n');
+        this.lineLengths = lines.map( line => line.length );
 
+        this.sizeInput();
         this.$emit('textChange', this.text);
       }
     },
@@ -30,13 +33,20 @@
 
     mounted() {
       document.addEventListener('keydown', this.onKeyDown);
+      document.addEventListener('keyup', this.onKeyUp);
     },
 
     destroyed() {
       document.removeEventListener('keydown', this.onKeyDown);
+      document.removeEventListener('keydown', this.onKeyUp);
     },
 
     methods: {
+      /*
+      If the input doesn't have focus and the key that is pressed shows intent
+      that the user is trying to manipulate the input, switch focus to the input
+      before keyUp.
+       */
       onKeyDown: function(event) {
         // Does the input already have focus?
         if (this.$refs.input === document.activeElement) return;
@@ -61,9 +71,50 @@
         }
       },
 
+      onKeyUp: function(event) {
+        this.updateCaretPosition();
+      },
+
       sizeInput() {
-        let lines = this.text.split('\n').length;
-        this.rows = (lines < 3) ? lines : 3;
+        this.rows = (this.lineLengths.length < 3) ? this.lineLengths.length : 3;
+      },
+
+      updateCaretPosition() {
+        const start = this.$refs.input.selectionStart;
+        const end = this.$refs.input.selectionEnd;
+
+        if (start === end ) {
+          let previousLineStart = 0;
+          let previousLineLength = 0;
+          let currentLineStart;
+          let currentLineLength;
+          let currentLineEnd;
+          let caretLine;
+          let caretLinePosition;
+
+          for (let i = 0; i < this.lineLengths.length; i++) {
+            // Note the + 1 for length. The available positions for the caret are one more than the
+            // characters. Example using a four letter line with dots representing the possible
+            // caret positions:
+            // TEST
+            // .T.E.S.T.
+            currentLineStart = previousLineStart + previousLineLength;
+            currentLineLength = this.lineLengths[i] + 1;
+            currentLineEnd = currentLineStart + currentLineLength;
+
+            if (start < currentLineEnd) {
+              caretLine = i;
+              caretLinePosition = start - currentLineStart;
+              break;
+            }
+
+            previousLineStart = currentLineStart;
+            previousLineLength = currentLineLength;
+          }
+          console.log(caretLine + ':' + caretLinePosition);
+        } else {
+          console.log('selection');
+        }
       }
     }
   }

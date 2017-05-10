@@ -45,7 +45,7 @@ export default {
       fonts: fontListFiltered,
       isInfoPanelOpen: false,
 
-      text: '',
+      text: 'Bop',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       windowWidth: '',
     }
