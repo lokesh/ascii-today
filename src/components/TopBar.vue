@@ -1,10 +1,29 @@
 <template>
   <div class="top-bar" @click="$refs.input.focus()">
-    <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" :rows="rows" autofocus></textarea>
+    <div ref="ruler" class="ruler">0</div>
+    <div class="input-wrapper">
+      <div ref="caret" class="caret"></div>
+      <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" :rows="rows" autofocus></textarea>
+    </div>
   </div>
 </template>
 
 <script>
+  const fonts = new Map();
+
+  fonts.set(1, {
+      'font-size': '32px',
+      'line-height': '32px'
+    })
+    .set(2, {
+      'font-size': '24px',
+      'line-height': '32px'
+    })
+    .set(3, {
+      'font-size': '16px',
+      'line-height': '21px'
+    });
+
   export default {
     name: 'top-bar',
     props: ['initialText'],
@@ -13,7 +32,8 @@
       return {
         text: '',
         rows: 1,
-        lineLengths: []
+        lineLengths: [],
+        rulerText: ''
       }
     },
 
@@ -32,6 +52,7 @@
     },
 
     mounted() {
+      this.measureChars();
       document.addEventListener('keydown', this.onKeyDown);
       document.addEventListener('keyup', this.onKeyUp);
     },
@@ -75,6 +96,20 @@
         this.updateCaretPosition();
       },
 
+      measureChars() {
+        const $r = this.$refs.ruler;
+        $r.style.display = 'block';
+
+        for (let [key, value] of fonts) {
+          $r.style.fontSize = value['font-size'];
+          $r.style.lineHeight = value['line-height'];
+          value.charWidth = this.$refs.ruler.offsetWidth;
+          value.charHeight = this.$refs.ruler.offsetHeight;
+        }
+
+        $r.style.display = 'none';
+      },
+
       sizeInput() {
         this.rows = (this.lineLengths.length < 3) ? this.lineLengths.length : 3;
       },
@@ -112,8 +147,15 @@
             previousLineLength = currentLineLength;
           }
           console.log(caretLine + ':' + caretLinePosition);
+          const $c = this.$refs.caret;
+          // console.log(fonts.get(this.rows));
+          //
+          let horizontalFix = 2;
+
+          $c.style.top = caretLine * fonts.get(this.rows)['charHeight'] + 'px';
+          $c.style.left = (caretLinePosition * fonts.get(this.rows)['charWidth']) + horizontalFix + 'px';
         } else {
-          console.log('selection');
+          // console.log('selection');
         }
       }
     }
@@ -124,9 +166,58 @@
 <style lang="sass" scoped>
 @import '../sass/vars';
 
+.size-1 {
+  font-size: 32px;
+  line-height: 32px;
+}
+
+.size-2 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.size-3 {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.ruler {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: $bg-color;
+  font-family: Monaco, $font-mono;
+}
+
+.caret {
+  position: absolute;
+  width: 19px;
+  height: 32px;
+  // background-color: $green;
+  animation: blink 1.5s cubic-bezier(.215, .61, .355, 1) forwards infinite;
+}
+
+@keyframes blink {
+  0 {
+    background-color: $bg-color;
+  }
+  50% {
+    background-color: yellow;
+  }
+  100% {
+    background-color: $bg-color;
+  }
+}
+
 .top-bar {
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   position: fixed;
   z-index: 10;
@@ -135,14 +226,13 @@
   left: 0;
   height: $header-height;
   cursor: text;
-  padding-left: 16px;
+  padding: 0 32px;
   background-color: $bg-color;
   // border-bottom: 1px solid $border-color;
 }
 
 .input {
   width: 100%;
-  padding-left: 16px;
   color: $color;
   background-color: transparent;
   border: 0;
@@ -151,6 +241,7 @@
   outline: none;
   resize: none;
   overflow: hidden;
+  caret-color: transparent;
 
   // &:focus {
   //   background-color: $color;
@@ -161,15 +252,15 @@
   // }
 
   &.rows-1 {
-    font-size: 32px;
+    @extend .size-1;
   }
 
   &.rows-2 {
-    font-size: 24px
+    @extend .size-2;
   }
 
   &.rows-3 {
-    font-size: 16px;
+    @extend .size-3;
   }
 }
 </style>
