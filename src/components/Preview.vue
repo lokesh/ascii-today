@@ -152,7 +152,7 @@ export default {
 
 .text {
   margin: 0;
-  color: lighten($color, 4%);
+  color: $preview-color;
   font-size: 12px;
   font-family: Menlo, $font-mono;
   line-height: 1.3em;

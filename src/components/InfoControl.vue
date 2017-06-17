@@ -27,11 +27,11 @@
   padding: 0;
   text-align: center;
   background-color: $color;
-  border: 2px solid $border-color;
   font-family: $font-mono;
   cursor: pointer;
   outline: none;
   user-select:  none;
+  border: none;
 }
 
 @media (min-width: 760px) {

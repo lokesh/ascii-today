@@ -11,9 +11,6 @@
           </div>
         </template>
       </section>
-      <template v-else>
-        <empty-state></empty-state>
-      </template>
   </div>
 </template>
 
@@ -45,7 +42,7 @@ export default {
       fonts: fontListFiltered,
       isInfoPanelOpen: false,
 
-      text: 'Bop',
+      text: '',
       // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       windowWidth: '',
     }
@@ -120,7 +117,8 @@ export default {
 }
 
 ::selection {
-  background-color: $select-color;
+  color: $select-color;
+  background-color: $select-bg-color;
 }
 
 a {

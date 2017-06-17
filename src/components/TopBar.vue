@@ -1,9 +1,21 @@
 <template>
   <div class="top-bar" @click="$refs.input.focus()">
-    <div ref="ruler" class="ruler">0</div>
+    <div ref="ruler" class="ruler"></div>
     <div class="input-wrapper">
-      <div ref="caret" class="caret"></div>
-      <textarea ref="input" :class="'input rows-' + rows" v-model="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" :rows="rows" autofocus></textarea>
+      <div ref="caret" class="caret" v-show="!hasUserSelectedText"></div>
+      <textarea
+        ref="input"
+        :class="'input rows-' + rows"
+        v-model="text"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        :rows="rows"
+        autofocus
+        @mouseup="onInputMouseUp"
+      >
+      </textarea>
     </div>
   </div>
 </template>
@@ -13,15 +25,15 @@
 
   fonts.set(1, {
       'font-size': '32px',
-      'line-height': '32px'
+      'line-height': '34px',
     })
     .set(2, {
       'font-size': '24px',
-      'line-height': '32px'
+      'line-height': '30px',
     })
     .set(3, {
       'font-size': '16px',
-      'line-height': '21px'
+      'line-height': '20px',
     });
 
   export default {
@@ -33,7 +45,8 @@
         text: '',
         rows: 1,
         lineLengths: [],
-        rulerText: ''
+        rulerText: '',
+        hasUserSelectedText: false,
       }
     },
 
@@ -96,6 +109,17 @@
         this.updateCaretPosition();
       },
 
+      onInputMouseUp() {
+        const start = this.$refs.input.selectionStart;
+        const end = this.$refs.input.selectionEnd;
+
+        if (start !== end ) {
+          this.hasUserSelectedText = true;
+        } else {
+          this.hasUserSelectedText = false;
+        }
+      },
+
       measureChars() {
         const $r = this.$refs.ruler;
         $r.style.display = 'block';
@@ -103,7 +127,10 @@
         for (let [key, value] of fonts) {
           $r.style.fontSize = value['font-size'];
           $r.style.lineHeight = value['line-height'];
-          value.charWidth = this.$refs.ruler.offsetWidth;
+
+          $r.innerHTML = '1234567890';
+
+          value.charWidth = this.$refs.ruler.offsetWidth / 10;
           value.charHeight = this.$refs.ruler.offsetHeight;
         }
 
@@ -118,7 +145,10 @@
         const start = this.$refs.input.selectionStart;
         const end = this.$refs.input.selectionEnd;
 
+        // If no selection
         if (start === end ) {
+          this.hasUserSelectedText = false;
+
           let previousLineStart = 0;
           let previousLineLength = 0;
           let currentLineStart;
@@ -146,15 +176,17 @@
             previousLineStart = currentLineStart;
             previousLineLength = currentLineLength;
           }
-          console.log(caretLine + ':' + caretLinePosition);
           const $c = this.$refs.caret;
-          // console.log(fonts.get(this.rows));
-          //
+
           let horizontalFix = 2;
 
           $c.style.top = caretLine * fonts.get(this.rows)['charHeight'] + 'px';
           $c.style.left = (caretLinePosition * fonts.get(this.rows)['charWidth']) + horizontalFix + 'px';
+          $c.style.width = fonts.get(this.rows)['charWidth'] + 'px';
+          $c.style.height = fonts.get(this.rows)['charHeight'] + 'px';
+
         } else {
+          this.hasUserSelectedText = true;
           // console.log('selection');
         }
       }
@@ -168,17 +200,17 @@
 
 .size-1 {
   font-size: 32px;
-  line-height: 32px;
+  line-height: 34px;
 }
 
 .size-2 {
   font-size: 24px;
-  line-height: 32px;
+  line-height: 30px;
 }
 
 .size-3 {
   font-size: 16px;
-  line-height: 21px;
+  line-height: 20px;
 }
 
 .input-wrapper {
@@ -192,14 +224,13 @@
   left: 0;
   z-index: 1000;
   background-color: $bg-color;
-  font-family: Monaco, $font-mono;
+  font-family: Monaco, Consolas, 'Lucida Console', $font-mono;
 }
 
 .caret {
   position: absolute;
   width: 19px;
-  height: 32px;
-  // background-color: $green;
+  height: 36px;
   animation: blink 1.5s cubic-bezier(.215, .61, .355, 1) forwards infinite;
 }
 
@@ -208,7 +239,7 @@
     background-color: $bg-color;
   }
   50% {
-    background-color: yellow;
+    background-color: $caret-color;
   }
   100% {
     background-color: $bg-color;
@@ -236,7 +267,7 @@
   color: $color;
   background-color: transparent;
   border: 0;
-  font-family: Monaco, $font-mono;
+  font-family: Monaco, Conasolas, 'Lucida Console', $font-mono;
   font-size: 32px;
   outline: none;
   resize: none;
