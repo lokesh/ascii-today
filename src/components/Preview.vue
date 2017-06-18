@@ -1,18 +1,10 @@
 <template>
   <div class="preview" @click="selectText">
-    <!-- <div class="click-msg">Click to copy</div> -->
-<pre class="clip-msg" v-if="wasRecentlyClicked">      __
-     / / Copied
-__  / /  to
-\ \/ /   clipboard
- \__/    </pre>
-
-    <div class="copy"></div>
     <div class="meta">
-      <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
-      <div class="click-msg">Click to copy</div>
+      <h2 class="name meta-text">{{ fontName }} by {{ fontAuthor }}</h2>
+      <div class="copied-msg meta-text" v-if="wasRecentlyClicked">Copied to clipboard</div>
+      <div class="click-msg meta-text" v-else>Click to copy</div>
     </div>
-
     <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
     <spinner v-else />
   </div>
@@ -130,15 +122,11 @@ export default {
     .click-msg {
       display: block;
     }
-    // .copy {
-    //   display: block;
-    // }
+    .copied-msg {
+      display: block;
+    }
 
   }
-
-  // &:active {
-  //   background-color: lighten($bg-color, 15%);
-  // }
 }
 
 .copy {
@@ -146,7 +134,6 @@ export default {
   position: absolute;
   top: 8px;
   right: 0;
-  // background-color: #fcab4c;
   background-color: $muted;
   width: 24px;
   height: 24px;
@@ -159,9 +146,7 @@ export default {
   margin: 0 0 8px 0;
 }
 
-
-.name {
-  margin: 0;
+.meta-text {
   font-weight: 500;
   font-size: 10px;
   text-transform: uppercase;
@@ -169,15 +154,18 @@ export default {
   overflow: hidden;
   white-space: nowrap;
 }
+.name {
+  margin: 0;
+}
 
 .click-msg {
+  display: none;
   color: white;
-  font-weight: 500;
-  font-size: 10px;
-  text-transform: uppercase;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+}
+
+.copied-msg {
+  display: none;
+  color: white;
 }
 
 .text {
@@ -187,49 +175,4 @@ export default {
   font-family: Menlo, $font-mono;
   line-height: 1.3em;
 }
-
-// .click-msg {
-//   display: none;
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   width: 96px;
-//   margin-left: -48px;
-//   padding: 4px 8px;
-//   background-color: $yellow;
-//   font-size: 10px;
-//   font-family: $font-mono;
-//   text-transform: uppercase;
-//   text-align: center;
-// }
-
-.click-msg {
-  display: none;
-}
-
-.clip-msg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 140px;
-  padding: 0 8px 8px 8px;
-  margin: 0;
-  color: $bg-color;
-  font-size: 10px;
-  background-color: $color;
-  font-family: $font-mono;
-  text-transform: uppercase;
-  transform: translateX(-50%) translateY(-50%);
-}
-
-.clip-msg__check {
-  margin: 0 0 8px 0;
-}
-
-.clip-msg__text {
-  text-align: center;
-}
-
-
-
 </style>

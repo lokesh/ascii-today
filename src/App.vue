@@ -41,9 +41,7 @@ export default {
       colCount: '3',
       fonts: fontListFiltered,
       isInfoPanelOpen: false,
-
       text: '',
-      // text: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+-={}[]|:";<>,.?/~`',
       windowWidth: '',
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar" @click="$refs.input.focus()">
     <div ref="ruler" class="ruler"></div>
-    <div class="input-wrapper">
+    <div ref="wrapper" class="input-wrapper">
       <div ref="caret" class="caret" v-show="!hasUserSelectedText"></div>
       <textarea
         ref="input"
@@ -156,6 +156,12 @@
       validateText() {
         let lines = this.text.split('\n');
         if (lines.length > 3) {
+          this.$refs.wrapper.classList.remove('shake');
+
+          this.$nextTick(function() {
+            this.$refs.wrapper.classList.add('shake');
+          })
+
           lines = lines.slice(0, 3);
           this.text = lines.join('\n');
         };
@@ -209,7 +215,6 @@
 
         } else {
           this.hasUserSelectedText = true;
-          // console.log('selection');
         }
       }
     }
@@ -237,6 +242,11 @@
 
 .input-wrapper {
   position: relative;
+  width: 100%;
+
+  &.shake {
+    animation: shake 0.4s forwards;
+  }
 }
 
 .ruler {
@@ -256,21 +266,8 @@
   animation: blink 1.5s cubic-bezier(.215, .61, .355, 1) forwards infinite;
 }
 
-@keyframes blink {
-  0 {
-    background-color: $bg-color;
-  }
-  50% {
-    background-color: $caret-color;
-  }
-  100% {
-    background-color: $bg-color;
-  }
-}
-
 .top-bar {
   display: flex;
-  // justify-content: center;
   align-items: center;
   position: fixed;
   z-index: 10;
@@ -281,7 +278,6 @@
   cursor: text;
   padding: 0 32px;
   background-color: $bg-color;
-  // border-bottom: 1px solid $border-color;
 }
 
 .input {
@@ -296,14 +292,6 @@
   overflow: hidden;
   caret-color: transparent;
 
-  // &:focus {
-  //   background-color: $color;
-  // }
-
-  // &::selection {
-  //   background-color: $select-color;
-  // }
-
   &.rows-1 {
     @extend .size-1;
   }
@@ -316,4 +304,53 @@
     @extend .size-3;
   }
 }
+
+@keyframes shake {
+  0 {
+    transform: translateX(-25px)
+  }
+  10% {
+    transform: translateX(25px)
+  }
+  20% {
+    transform: translateX(-20px)
+  }
+  30% {
+    transform: translateX(20px)
+  }
+  40% {
+    transform: translateX(-15px)
+  }
+  50% {
+    transform: translateX(15px)
+  }
+  60% {
+    transform: translateX(-10px)
+  }
+  70% {
+    transform: translateX(10px)
+  }
+  80% {
+    transform: translateX(-5px)
+  }
+  90% {
+    transform: translateX(5px)
+  }
+  100% {
+    transform: translateX(0)
+  }
+}
+
+@keyframes blink {
+  0 {
+    background-color: $bg-color;
+  }
+  50% {
+    background-color: $caret-color;
+  }
+  100% {
+    background-color: $bg-color;
+  }
+}
+
 </style>

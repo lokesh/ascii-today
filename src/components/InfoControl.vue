@@ -3,8 +3,8 @@
     'control',
     {'open': open}
   ]">
-    <template v-if="open">X</template>
-    <template v-else>I</template>
+    <template v-if="open">Back</template>
+    <template v-else>Info</template>
   </button>
 </template>
 
@@ -26,7 +26,7 @@
   line-height: $info-control-height * 1.5;
   padding: 0;
   text-align: center;
-  background-color: $color;
+  background-color: $muted;
   font-family: $font-mono;
   cursor: pointer;
   outline: none;
