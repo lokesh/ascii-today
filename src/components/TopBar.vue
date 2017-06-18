@@ -52,6 +52,8 @@
 
     watch: {
       'text': function() {
+        this.validateText(); // Max 3 lines allowed
+
         let lines = this.text.split('\n');
         this.lineLengths = lines.map( line => line.length );
 
@@ -109,6 +111,10 @@
         this.updateCaretPosition();
       },
 
+      /*
+      If user made a text selection, hide the custom caret.
+      The caret doesn't match the height of the selection rectangle so it looks bad.
+       */
       onInputMouseUp() {
         const start = this.$refs.input.selectionStart;
         const end = this.$refs.input.selectionEnd;
@@ -141,7 +147,23 @@
         this.rows = (this.lineLengths.length < 3) ? this.lineLengths.length : 3;
       },
 
+      /*
+      Only allow three lines of text max.
+      Because we are using a custom caret, supporting more lines requires more
+      caret positioning logic and there is already plenty. Unlikely this is a
+      common use case.
+       */
+      validateText() {
+        let lines = this.text.split('\n');
+        if (lines.length > 3) {
+          lines = lines.slice(0, 3);
+          this.text = lines.join('\n');
+        };
+      },
+
       updateCaretPosition() {
+        if (!this.$refs.input) return;
+
         const start = this.$refs.input.selectionStart;
         const end = this.$refs.input.selectionEnd;
 
