@@ -1,5 +1,6 @@
 <template>
   <div class="preview" @click="selectText">
+    <!-- <div class="click-msg">Click to copy</div> -->
 <pre class="clip-msg" v-if="wasRecentlyClicked">      __
      / / Copied
 __  / /  to
@@ -7,7 +8,10 @@ __  / /  to
  \__/    </pre>
 
     <div class="copy"></div>
-    <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
+    <div class="meta">
+      <h2 class="name">{{ fontName }} by {{ fontAuthor }}</h2>
+      <div class="click-msg">Click to copy</div>
+    </div>
 
     <pre v-if="loaded" ref="text" class="text">{{ generatedText }}</pre>
     <spinner v-else />
@@ -114,11 +118,22 @@ export default {
   height: 100%;
   padding-top: 8px;
   border-top: 2px solid $border-color;
+
   &:hover {
+    cursor: pointer;
+    border-top: 2px solid white;
+
+    .name {
+      display: none;
+    }
+
+    .click-msg {
+      display: block;
+    }
     // .copy {
     //   display: block;
     // }
-    cursor: pointer;
+
   }
 
   // &:active {
@@ -138,16 +153,31 @@ export default {
   border-radius: 50%;
 }
 
-.name {
+.meta {
   color: $muted;
   font-family: $font-mono;
+  margin: 0 0 8px 0;
+}
+
+
+.name {
+  margin: 0;
   font-weight: 500;
   font-size: 10px;
   text-transform: uppercase;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  margin: 0 0 8px 0;
+}
+
+.click-msg {
+  color: white;
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .text {
@@ -156,6 +186,25 @@ export default {
   font-size: 12px;
   font-family: Menlo, $font-mono;
   line-height: 1.3em;
+}
+
+// .click-msg {
+//   display: none;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   width: 96px;
+//   margin-left: -48px;
+//   padding: 4px 8px;
+//   background-color: $yellow;
+//   font-size: 10px;
+//   font-family: $font-mono;
+//   text-transform: uppercase;
+//   text-align: center;
+// }
+
+.click-msg {
+  display: none;
 }
 
 .clip-msg {
