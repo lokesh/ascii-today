@@ -256,7 +256,7 @@
   left: 0;
   z-index: 1000;
   background-color: $bg-color;
-  font-family: Monaco, Consolas, 'Lucida Console', $font-mono;
+  font-family: Monaco, Consolas, Menlo, 'Lucida Console', $font-mono;
 }
 
 .caret {
@@ -276,8 +276,14 @@
   left: 0;
   height: $header-height;
   cursor: text;
-  padding: 0 32px;
+  padding: 0 $gutter;
   background-color: $bg-color;
+}
+
+@media (max-width: 640px) {
+  .top-bar {
+    padding: 0 $gutter-mobile;
+  }
 }
 
 .input {
@@ -285,7 +291,7 @@
   color: $color;
   background-color: transparent;
   border: 0;
-  font-family: Monaco, Conasolas, 'Lucida Console', $font-mono;
+  font-family: Monaco, Conasolas, Menlo, 'Lucida Console', $font-mono;
   font-size: 32px;
   outline: none;
   resize: none;
