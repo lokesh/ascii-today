@@ -1,6 +1,6 @@
 # ASCII Today
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/bf24bf74-880a-42f2-ab32-ef40a13eca91/deploy-status)](https://app.netlify.com/sites/amazing-golick-2d22cf/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0543ef53-e923-4a99-98f0-33f20b8641fa/deploy-status)](https://app.netlify.com/sites/boring-swanson-cc9834/deploys)
 
 A super-fast ASCII title generator.
 
