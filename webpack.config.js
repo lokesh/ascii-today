@@ -18,13 +18,6 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      },
-      {
         test: /\.css$/,
         loader: 'style!css'
       }
@@ -32,17 +25,10 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'jquery': path.resolve(__dirname, 'src/utils/jquery.js'),
       'figlet': 'figlet/lib/figlet',
       'vue$': 'vue/dist/vue.common.js',
     }
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery'
-    })
-  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
