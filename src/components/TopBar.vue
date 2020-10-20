@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { beep, boop } from '../utils/Sound.js';
+
   const fonts = new Map();
 
   fonts.set(1, {
@@ -51,8 +53,14 @@
     },
 
     watch: {
-      'text': function() {
+      text: function(val, oldVal) {
         this.validateText(); // Max 3 lines allowed
+
+        if (val.length > oldVal.length) {
+          boop();
+        } else {
+          beep();
+        }
 
         let lines = this.text.split('\n');
         this.lineLengths = lines.map( line => line.length );
