@@ -35,23 +35,19 @@ export default {
 
 </script>
 
-<style lang="sass" scoped>
-.state-0 {
-  .space {
-    display: none;
-  }
-  .line {
-    display: block;
-  }
+<style scoped>
+.state-0 .space {
+  display: none;
+}
+.state-0 .line {
+  display: block;
 }
 
-.state-1 {
-  .space {
-    display: block;
-  }
-  .line {
-    display: none;
-  }
+.state-1 .space {
+  display: block;
+}
+.state-1 .line {
+  display: none;
 }
 </style>
 

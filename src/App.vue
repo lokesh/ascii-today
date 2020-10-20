@@ -4,7 +4,12 @@
       <info-control class="info-control" :open="isInfoPanelOpen" @click.native="toggleInfoPanel"></info-control>
       <top-bar ref="control" :initial-text="text" @textChange="onPreviewControlInput"></top-bar>
 
-      <section v-if="text.length > 0" ref="previews" :class="['previews', 'previews--cols-' + colCount]">
+      <section
+        v-if="text.length > 0"
+        ref="previews"
+        class="previews"
+        :style="`grid-template-columns: repeat(${colCount}, 1fr)`"
+      >
         <template v-for="font in fonts">
           <div class="preview-wrapper">
             <preview :text="text" :font-name="font.name" :font-author="font.author"></preview>
@@ -107,202 +112,107 @@ export default {
 }
 </script>
 
-<style lang="sass">
-@import './sass/vars';
+<style>
+:root {
+  /* Fonts */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-mono: "Roboto Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+  /* Colors */
+
+  --yellow: yellow;
+  --cyan: #45ffff;
+  --magenta: #ff3dff;
+  --green: #0f0;
+  --dark-blue: #1900c1;
+
+
+  --lime-green: #b2ff59;
+  --green: #00e676;
+
+  --red: #ff5f50;
+
+  /* Dark theme */
+  --color: #ECEEFA;
+  --muted: #636773;
+  --bg-color: #222;
+  --border-color: var(--muted);
+
+  --link-color: var(--yellow);
+
+  --select-color: var(--bg-color);
+  --select-bg-color: var(--yellow);
+
+  --caret-color: var(--yellow);
+  --preview-color: var(--color);
+
+  /* Layout */
+  --header-height: 64px;
+  --info-control-height: 24px;
+  --info-control-width: 36px;
+
+  --gutter: 8px;
+}
+
+@media (min-width: 640px) {
+  :root {
+      --gutter: 16px;
+      --header-height: 96px;
+  }
+}
 
 * {
   box-sizing: border-box;
 }
 
 ::selection {
-  color: $select-color;
-  background-color: $select-bg-color;
+  color: var(--select-color);
+  background-color: var(--select-bg-color);
 }
 
 a {
-  color: $link-color;
+  color: var(--link-color);
 }
 
 </style>
 
 
 
-<style lang="sass" scoped>
-@import '/sass/vars';
-
+<style scoped>
 .app {
-  padding-top: $header-height;
-
-  .info-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 20;
-  }
-
-  .previews {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .preview-wrapper {
-    padding: 0 0 $gutter $gutter;
-  }
-
-  .previews--cols-1 {
-    .preview-wrapper {
-      width: 100%;
-    }
-  }
-
-  .previews--cols-2 {
-    .preview-wrapper {
-      width: 50%;
-    }
-
-    .preview-wrapper:nth-child(2n+1) {
-    }
-
-    .preview-wrapper:nth-child(2n) {
-      padding-right: $gutter;
-    }
-  }
-
-  .previews--cols-3 {
-    .preview-wrapper {
-      width: 33.3%;
-    }
-
-    .preview-wrapper:nth-child(3n) {
-      padding-right: $gutter;
-    }
-  }
-
- .previews--cols-4 {
-    .preview-wrapper {
-      width: 25%;
-    }
-
-    .preview-wrapper:nth-child(4n) {
-      padding-right: $gutter;
-    }
-  }
-
- .previews--cols-5 {
-    .preview-wrapper {
-      width: 20%;
-    }
-
-    .preview-wrapper:nth-child(5n) {
-      padding-right: $gutter;
-    }
-  }
-
-  .previews--cols-6 {
-    .preview-wrapper {
-      width: 16.6%;
-    }
-
-    .preview-wrapper:nth-child(6n) {
-      padding-right: $gutter;
-    }
-  }
-
- .previews--cols-7 {
-    .preview-wrapper {
-      width: 14.2%;
-    }
-
-    .preview-wrapper:nth-child(7n) {
-      padding-right: $gutter;
-    }
-  }
-
- .previews--cols-8 {
-    .preview-wrapper {
-      width: 12.5%;
-    }
-
-    .preview-wrapper:nth-child(8n) {
-      padding-right: $gutter;
-    }
-  }
+  padding-top: var(--header-height);
 }
 
-@media (max-width: 640px) {
-  .app {
-    .preview-wrapper {
-      padding: 0 0 $gutter-mobile $gutter-mobile;
-    }
+.info-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
 
-  .previews--cols-2 {
-      .preview-wrapper:nth-child(2n) {
-        padding-right: $gutter-mobile;
-      }
-    }
+.previews {
+  display: grid;
+  grid-gap: var(--gutter);
+  padding: 0 var(--gutter);
+}
 
-    .previews--cols-3 {
-      .preview-wrapper:nth-child(3n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-   .previews--cols-4 {
-      .preview-wrapper:nth-child(4n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-   .previews--cols-5 {
-      .preview-wrapper:nth-child(5n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-    .previews--cols-6 {
-      .preview-wrapper:nth-child(6n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-   .previews--cols-7 {
-      .preview-wrapper:nth-child(7n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-   .previews--cols-8 {
-      .preview-wrapper:nth-child(8n) {
-        padding-right: $gutter-mobile;
-      }
-    }
-
-  }
+.preview-wrapper {
+  overflow-x: hidden;
 }
 
 .empty-state {
   text-align: center;
   color: white;
-  font-family: $font-mono;
+  font-family: var(--font-mono);
 }
 
 .info-control {
   position: fixed;
-  left: $gutter-mobile;
-  bottom: $gutter-mobile;
+  top: var(--gutter);
+  right: var(--gutter);
   z-index: 30;
   font-weight: bold;
 }
-
-@media (min-width: 760px) {
-  .info-control {
-    top: ($header-height / 2) - ($info-control-height / 2);
-    right: ($header-height / 2) - ($info-control-width / 2);
-    bottom: auto;
-    left: auto;
-  }
-}
-
 </style>

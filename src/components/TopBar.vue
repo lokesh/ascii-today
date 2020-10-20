@@ -222,31 +222,14 @@
 </script>
 
 
-<style lang="sass" scoped>
-@import '../sass/vars';
-
-.size-1 {
-  font-size: 32px;
-  line-height: 34px;
-}
-
-.size-2 {
-  font-size: 24px;
-  line-height: 30px;
-}
-
-.size-3 {
-  font-size: 16px;
-  line-height: 20px;
-}
-
+<style scoped>
 .input-wrapper {
   position: relative;
   width: 100%;
+}
 
-  &.shake {
-    animation: shake 0.4s forwards;
-  }
+.input-wrapper.shake {
+  animation: shake 0.4s forwards;
 }
 
 .ruler {
@@ -255,8 +238,8 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  background-color: $bg-color;
-  font-family: Monaco, Consolas, Menlo, 'Lucida Console', $font-mono;
+  background-color: var(--bg-color);
+  font-family: Monaco, Consolas, Menlo, 'Lucida Console', var(--font-mono);
 }
 
 .caret {
@@ -274,42 +257,47 @@
   top: 0;
   right: 0;
   left: 0;
-  height: $header-height;
+  height: var(--header-height);
   cursor: text;
-  padding: 0 $gutter;
-  background-color: $bg-color;
+  padding: 0 var(--gutter);
+  background-color: var(--bg-color);
 }
 
 @media (max-width: 640px) {
   .top-bar {
-    padding: 0 $gutter-mobile;
+    padding: 0 var(--gutter);
   }
 }
 
 .input {
   width: 100%;
-  color: $color;
+  color: var(--color);
   background-color: transparent;
   border: 0;
-  font-family: Monaco, Conasolas, Menlo, 'Lucida Console', $font-mono;
+  font-family: Monaco, Conasolas, Menlo, 'Lucida Console', var(--font-mono);
   font-size: 32px;
   outline: none;
   resize: none;
   overflow: hidden;
   caret-color: transparent;
-
-  &.rows-1 {
-    @extend .size-1;
-  }
-
-  &.rows-2 {
-    @extend .size-2;
-  }
-
-  &.rows-3 {
-    @extend .size-3;
-  }
 }
+
+.input.rows-1 {
+  font-size: 32px;
+  line-height: 34px;
+}
+
+.input.rows-2 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.input.rows-3 {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+
 
 @keyframes shake {
   0 {
@@ -349,13 +337,13 @@
 
 @keyframes blink {
   0 {
-    background-color: $bg-color;
+    background-color: var(--bg-color);
   }
   50% {
-    background-color: $caret-color;
+    background-color: var(--caret-color);
   }
   100% {
-    background-color: $bg-color;
+    background-color: var(--bg-color);
   }
 }
 

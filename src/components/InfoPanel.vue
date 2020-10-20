@@ -26,23 +26,21 @@
   }
 </script>
 
-<style lang="sass" scoped>
-@import '../sass/vars';
-
+<style scoped>
 .info-panel {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
   padding: 20px 20px 70px 20px;
-  color: $color;
-  background-color: $bg-color;
-  font-family: $font-mono;
+  color: var(--color);
+  background-color: var(--bg-color);
+  font-family: var(--font-mono);
   font-size: 12px;
+}
 
-  pre {
-    font-family: $font-mono;
-    font-size: 16px;
-  }
+.info-panel pre {
+  font-family: var(--font-mono);
+  font-size: 16px;
 }
 
 .text {

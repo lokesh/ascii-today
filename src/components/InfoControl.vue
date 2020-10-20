@@ -16,31 +16,19 @@
 
 </script>
 
-<style lang="sass" scoped>
-@import '../sass/vars';
-
+<style scoped>
 .control {
   box-sizing: content-box;
-  width: $info-control-width * 1.5;
-  height: $info-control-height * 1.5;
-  line-height: $info-control-height * 1.5;
+  width: 48px;
+  height: 24px;
+  line-height: 24px;
   padding: 0;
   text-align: center;
-  background-color: $muted;
-  font-family: $font-mono;
+  background-color: var(--muted);
+  font-family: var(--font-mono);
   cursor: pointer;
   outline: none;
   user-select:  none;
   border: none;
 }
-
-@media (min-width: 760px) {
-  .control {
-    width: $info-control-width;
-    height: $info-control-height;
-    line-height: $info-control-height;
-  }
-}
-
-
 </style>

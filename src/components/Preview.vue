@@ -101,32 +101,31 @@ export default {
 
 </script>
 
-<style lang="sass" scoped>
-@import '../sass/vars';
-
+<style scoped>
 .preview {
   position: relative;
   overflow: hidden;
   height: 100%;
   padding-top: 8px;
-  border-top: 2px solid $border-color;
+  border-top: 2px solid var(--border-color);
+}
 
-  &:hover {
-    cursor: pointer;
-    border-top: 2px solid white;
 
-    .name {
-      display: none;
-    }
+.preview:hover {
+  cursor: pointer;
+  border-top: 2px solid white;
+}
 
-    .click-msg {
-      display: block;
-    }
-    .copied-msg {
-      display: block;
-    }
+.preview:hover .name {
+  display: none;
+}
 
-  }
+.preview:hover .click-msg {
+  display: block;
+}
+
+.preview:hover .copied-msg {
+  display: block;
 }
 
 .copy {
@@ -134,15 +133,15 @@ export default {
   position: absolute;
   top: 8px;
   right: 0;
-  background-color: $muted;
+  background-color: var(--muted);
   width: 24px;
   height: 24px;
   border-radius: 50%;
 }
 
 .meta {
-  color: $muted;
-  font-family: $font-mono;
+  color: var(--muted);
+  font-family: var(--font-mono);
   margin: 0 0 8px 0;
 }
 
@@ -170,9 +169,9 @@ export default {
 
 .text {
   margin: 0;
-  color: $preview-color;
+  color: var(--preview-color);
   font-size: 12px;
-  font-family: Menlo, $font-mono;
+  font-family: Menlo, var(--font-mono);
   line-height: 1.3em;
 }
 </style>

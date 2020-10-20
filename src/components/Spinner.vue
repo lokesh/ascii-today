@@ -8,30 +8,27 @@
   }
 </script>
 
-<style lang="sass" scoped>
-@import '../sass/vars';
-
-$spinner-list: ('⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏');
-
+<style scoped>
 @keyframes spinner {
-  @for $i from 1 through 10 {
-    $number: $i * 10;
-    $percent: $number + "%";
-    #{$percent} {
-      content: nth($spinner-list, $i);
-    }
-  }
+  10% { content: '⠋'; }
+  20% { content: '⠙'; }
+  30% { content: '⠹'; }
+  40% { content: '⠸'; }
+  50% { content: '⠼'; }
+  60% { content: '⠴'; }
+  70% { content: '⠦'; }
+  80% { content: '⠧'; }
+  90% { content: '⠇'; }
+  100% { content: '⠏'; }
 }
-
 .spinner {
-  color: $muted;
-  font-family: $font-mono;
+  color: var(--muted);
+  font-family: var(--font-mono);
   font-size: 24px;
-
-  &::after {
-    content: '⠋';
-    animation: spinner 0.5s linear infinite;
-  }
 }
 
+.spinner::after {
+  content: '⠋';
+  animation: spinner 0.5s linear infinite;
+}
 </style>
