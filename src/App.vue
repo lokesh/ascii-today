@@ -22,7 +22,6 @@
 <script>
 import figlet from 'figlet';
 import {fonts as fontList} from './data/fonts.json';
-import EmptyState from './components/EmptyState.vue';
 import InfoControl from './components/InfoControl.vue';
 import InfoPanel from './components/InfoPanel.vue';
 import Preview from './components/Preview.vue';
@@ -34,7 +33,6 @@ export default {
   name: 'app',
 
   components: {
-    EmptyState,
     InfoControl,
     InfoPanel,
     Preview,
