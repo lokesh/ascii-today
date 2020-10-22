@@ -12,6 +12,7 @@
 
 <script>
 import figlet from 'figlet';
+import { zing } from '../utils/Sound.js';
 import TextSelection from '../utils/TextSelection';
 import Spinner from '../components/Spinner.vue';
 
@@ -88,6 +89,7 @@ export default {
         // copy text
         document.execCommand('copy');
         TextSelection.deselect()
+        zing();
         this.$emit('copied');
       }
       catch (err) {
