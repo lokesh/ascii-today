@@ -6,7 +6,7 @@ A super-fast ASCII title generator.
 
 - Vue front-end app.
 - Webpack for building.
-- Hosted on Netlify.
+- Hosted on Netlify. Push to `master` to deploy.
 - SSL Certificate provided by Let's Encrypt and generated via Netlify admin.
 - Domain name registered at Name.com
 
